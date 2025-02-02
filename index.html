@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 300px;
+        }
+        td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 10px;
+        }
+        .highlight {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+
+    <table id="numTable"></table>
+    <button onclick="addNumber()">Добавить число</button>
+
+    <script>
+        let numbers = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100))
+        let rows = 5, cols = 6
+        let table = document.getElementById("numTable")
+
+        function createTable() {
+            let index = 0
+            for (let i = 0; i < rows; i++) {
+                let tr = document.createElement("tr")
+                for (let j = 0; j < cols; j++) {
+                    let td = document.createElement("td")
+                    td.textContent = numbers[index]
+                    if (numbers[index] >= 50) {
+                        td.classList.add("highlight")
+                    }
+                    tr.appendChild(td)
+                    index++
+                }
+                table.appendChild(tr)
+            }
+        }
+
+        function addNumber() {
+            let newNumber = Math.floor(Math.random() * 100)
+            numbers.push(newNumber)
+            let trList = table.getElementsByTagName("tr")
+            let lastRow = trList[trList.length - 1]
+
+            if (lastRow.children.length < cols) {
+                let td = document.createElement("td")
+                td.textContent = newNumber
+                if (newNumber >= 50) {
+                    td.classList.add("highlight")
+                }
+                lastRow.appendChild(td)
+            } else {
+                let newRow = document.createElement("tr")
+                let td = document.createElement("td")
+                td.textContent = newNumber
+                if (newNumber >= 50) {
+                    td.classList.add("highlight")
+                }
+                newRow.appendChild(td)
+                table.appendChild(newRow)
+            }
+        }
+
+        createTable()
+    </script>
+
+</body>
+</html>
